@@ -31,13 +31,21 @@
             function renderMarkdown(markdown) {
                 var markdownContent = marked.parse(markdown);
                 var cardDeck = document.getElementById('card-deck');
-                cardDeck.innerHTML = markdownContent;
+
+                // Create a new div element
+                var contentDiv = document.createElement('div');
+
+                // Set the HTML content using the rendered markdown
+                contentDiv.innerHTML = markdownContent;
 
                 // Apply syntax highlighting to code blocks
                 var codeBlocks = cardDeck.querySelectorAll('pre code');
                 codeBlocks.forEach(function(codeBlock) {
                     hljs.highlightElement(codeBlock);
                 });
+
+                // Append the new div element to the card deck
+                cardDeck.appendChild(contentDiv);
             }
 
             // Function to handle card click event
