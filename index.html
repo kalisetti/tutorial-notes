@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
+        <!-- <title><%= htmlWebpackPlugin.options.title =></title> -->
+        <title>Online Tutorial Notes</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Online Tutorial Notes</h1>
+            <div class="card-deck" id="card-deck"></div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.5/marked.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script>
+            var titles = [
+                { title: 'VueJS', path: 'tutorials/Udemy_Vue.md' },
+                { title: 'Git & Github', path: 'tutorials/Udemy_Vue.md' },
+                { title: 'Python', path: 'tutorials/Udemy_Vue.md' },
+                { title: 'SQL', path: 'tutorials/Udemy_Vue.md' }
+            ];
+
+            // Function to render Markdown content
+            function renderMarkdown(markdown) {
+                var markdownContent = marked(markdown);
+                document.getElementById('card-deck').innerHTML = markdownContent;
+            }
+
+            // Function to handle card click event
+            function handleCardClick(path) {
+                fetch(path)
+                    .then(response => response.text())
+                    .then(data => renderMarkdown(data))
+                    .catch(error => console.log(error));
+            }
+
+            // Function to create cards with titles
+            function createCards() {
+                var cardDeck = document.getElementById('card-deck');
+
+                titles.forEach(function(title) {
+                    var card = document.createElement('div');
+                    card.className = 'card';
+                    card.style.cursor = 'pointer';
+                    card.onclick = function() {
+                        handleCardClick(title.path);
+                    };
+
+                    var cardBody = document.createElement('div');
+                    cardBody.className = 'card-body';
+                    cardBody.textContent = title.title;
+
+                    card.appendChild(cardBody);
+                    cardDeck.appendChild(card);
+                });
+            }
+
+            // Call the createCards function to generate the cards
+            createCards();
+        </script>
+    </body>
+</html>
