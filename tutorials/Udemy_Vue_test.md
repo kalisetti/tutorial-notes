@@ -3,7 +3,7 @@
 
 `filename: index.html`
 
-<pre>
+<pre class="language-html">
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +42,7 @@
 
 `filename: app.js`
 
-<pre>
+<pre class="language-js">
 const app = Vue.createApp({
   data() {
     return {
