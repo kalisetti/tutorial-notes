@@ -250,3 +250,224 @@ app.mount('#events');
     <input type="text" @click.stop/>
   </li>
 ```
+
+---
+#### Section#4: Course Project: The Monster Slayer Game
+---
+
+
++ We can put our regular javascript function above the vue app
+
+```js
+function getRandomValue(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+}
+
+const app = Vue.createApp({
+    data() {
+```
+
+
+##### Section#5: Vue: Behind the Scenes
+---
+
+##### Section#5: 60. An introduction to Vue's Reactivity
+---
+
+##### Section#5: 61. Vue Reactivity: A Deep Dive
+---
+
++ By default javascript is not reactive like vue, meaning, when we make changes to data properties it will not trigger
+    other dependent codes.
+
+`javascript proxies`
+```js
+const data = {
+  message: 'Hello!'
+};
+
+const handler = {
+  set(target, key, value) {
+    console.log(target);
+    console.log(key);
+    console.log(value);
+  }  
+}
+```
+
++ now we can wrap this object with javascript proxie
+
+```js 
+const proxy = new Proxy(data, handler);
+```
+
++ now the handler gets called when we change value in data
+
+```js
+proxy.message = 'Hello!!!!';
+```
+
++ This prints the following three console logs
+```js
+{message: 'Hello!'}
+message
+Hello!!!!
+```
+
++ Now, we want to make the changes as soon as value in message changes, we can re-write our handler like this
+
+```js
+const data = {
+  message: 'Hello!',
+  longMessage: 'Hello World!'
+};
+
+const handler = {
+  set(target, key, value) {
+    if (key === 'message') {
+      target.longMessage = value + ' Wordl!'
+    }
+    target.message = value;
+  }  
+}
+
+const proxy = new Proxy(data, handler);
+
+proxy.message = 'Hello!!!!';
+
+console.log(proxy.longMessage);
+--output
+Hello!!!! Wordl!
+```
+
++ So in a nutshell this is what Vue does, it keeps track of data properties, and whenever that property changes it updates
+    the part of our app where that property was used.
+
+
+##### Section#5: 62. One App vs Multiple Apps
+---
+
++ So far we created single app, however we can have as many apps we like and mount them in similar fashion.
++ Each Vue app works standalone, they do not have any links with other apps.
+
+
+##### Section#5: 63. Understanding Templates
+---
+
++ Basically the html part we used in Vue app are called html template of the app
++ So far, we have html code and we mounted our vue app on it, however we can also have template option when creating the app
+
+```js
+const app = Vue.createApp({
+  template: `
+    <p>{{ favoriteMeal }}</p>
+  `,
+  data() {
+    return {
+      favoriteMeal: 'Pizza'
+    }
+  }
+});
+
+app.mount('#app2')
+```
+
+
+##### Section#5: 64. Working with Refs
+---
+
++ Instead of adding event like @input or v-model which is basically executed with every key stroke, we can use ref attribute.
+  We can use this ref attribute to access the values on elements.
+
+```js
+  <input type="text" ref="userText">
+
+  setText() {
+    // this.message = this.currentUserInput;
+    this.message = this.$refs.userText.value;  
+  }
+```
+
+
+##### Section#5: 65. How Vue Updates the DOM
+---
+
++ Vue actually maintains entire DOM in javascript/memory and whenever changes happen 
+  to data properties, it creates another virtual DOM and compares for changes and 
+  then updates in real DOM(which was rendered to the screen).
+
++ In reality it does not re-create the entrire DOM, vue has lot of performance tricks
+
+
+##### Section#5: 66. Vue App Lifecycle - Theory
+---
+
++ Vue instance lifecycle, we can use these hooks and do cleanup if required and many more
+
+  * createApp({...})
+    - beforeCreate()
+      called before the app is fully initialized
+    - created()
+      called thereafter, after this vue knows the data properties and general configuration.
+        - Compile template --> beforeMount()
+    - beforeMount()
+      right before we see something on screen
+    - mounted() --> Mounted Vue Instance --> Data Changed --> beforeUpdate() --> updated
+                            |
+                            --> Instance Unmounted --> beforeUnmount() --> unmounted()
+      now we see something on the screen
+
+
+##### Section#5: 67. Vue App Lifecycle - Practice
+---
+
+```js
+const app = Vue.createApp({
+  data() {
+    return {
+      currentUserInput: '',
+      message: 'Vue is great!',
+    };
+  },
+  methods: {
+    saveInput(event) {
+      this.currentUserInput = event.target.value;
+    },
+    setText() {
+      console.log('setText()');
+      this.message = this.currentUserInput;
+    },
+  },
+  beforeCreate() {
+    console.log('beforeCreate()');
+  },
+  created() {
+    console.log('created()');
+  },
+  beforeMount() {
+    console.log('beforeMount()');
+  },
+  mounted() {
+    console.log('mounted()');
+  },
+  beforeUpdate() {
+    console.log('beforeUpdate()');
+  },
+  updated() {
+    console.log('updated()');
+  },
+  beforeUnmount() {
+    console.log('beforeUnmount()');
+  },
+  unmounted() {
+    console.log('unmounted()');
+  }
+});
+
+app.mount('#app');
+
+setTimeout(function () {
+  app.unmount();
+}, 3000)
+```
+
