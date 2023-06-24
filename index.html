@@ -28,7 +28,7 @@
 
             // Function to render Markdown content
             function renderMarkdown(markdown) {
-                var markdownContent = marked(markdown);
+                var markdownContent = marked.parse(markdown);
                 document.getElementById('card-deck').innerHTML = markdownContent;
             }
 
