@@ -1,5 +1,5 @@
 
-# Section#2: Basics & Core Concepts - DOM Interface with Vue
+### Section#2: Basics & Core Concepts - DOM Interface with Vue
 
 `filename: index.html`
 ```html
