@@ -1,5 +1,6 @@
-
+---
 #### Section#2: Basics & Core Concepts - DOM Interface with Vue
+---
 
 `filename: index.html`
 ```html
@@ -109,15 +110,15 @@ app.mount('#events');
 	variable, when the value of it is changed the watch is executed.
 
 ```js
-	eg:
-		data() {
-			name: ''
-		},
-		watch: {
-			name(newValue, oldValue) {
-				// Do something here
-			}
-		}
+  eg:
+    data() {
+      name: ''
+    },
+    watch: {
+      name(newValue, oldValue) {
+        // Do something here
+      }
+    }
 ```
 
 + We dont return anything from watches, instead we use them to execute some code whenever a value changes
@@ -136,7 +137,7 @@ app.mount('#events');
   `@click="add"`
 
 
-* Instead of `v-bind` we can use `:`\
+* Instead of `v-bind` we can use `:`
   
   `v-bind:value="name"`\
 	becomes \
@@ -157,4 +158,76 @@ app.mount('#events');
 	`:class="{active: boxASelected}"`\
 	becomes\
 	`:class="['demo', {active: boxASelected}]"`
+
+---
+#### Section#3: Rendering Conditional Content & Lists
+---
+
+##### Section#3: 41. Rendering Content Conditionally
+
++ <p v-if="goals.length == 0">No goals have been added yet - please start adding some!</p>
+
+
+##### Section#3: 42. v-if, v-else and v-else-if
+
+* v-else needs be the next immediate element after v-if
+
+      <p v-if="goals.length == 0">No goals have been added yet - please start adding some!</p>
+      <ul v-else>
+        <li>Goal</li>
+      </ul>
+
+##### Section#3: 43. Using v-show instead of v-if
+
+* v-if removes or inserts elements into DOM. Adding and removing elements from DOM causes performance.
+* v-show keeps the elements but makes their css property "display: none" while keeping the element in DOM,
+    however, v-show will not have v-else or v-else-if. It works like a standalone condition.
+
+    <p v-show="goals.length == 0">No goals have been added yet - please start adding some!</p>
+    <ul v-show="goals.length > 0">
+      <li>Goal</li>
+    </ul>
+
+
+##### Section#3: 44. Rendering Lists of Data
+
+
+<li v-for="goal in goals">{{ goal }}</li>
+
+
+##### Section#3: 45. Diving Deeper Into v-for
+
+
+-- Getting index in the loop
+<li v-for="(goal, idx) in goals">{{ goal }}</li>
+
+-- Loop through object
+<li v-for="(val, key, idx) in {name: 'Shiv', age: 40}">{{ key }}: {{ val }}</li>
+
+-- Loop through range of numbers (1..10)
+<li v-for="num in 10">{{ num }}</li>
+
+
+##### Section#3: 46. Removing List Items
+
+
+    <li v-for="(goal,idx) in goals" @click="removeGoal(idx)">{{ goal }}</li>
+
+    removeGoal(idx) {
+      this.goals.splice(idx, 1);
+    }
+
+
+## Section#3: 47. Lists & Keys
+
+* @click.stop can be used to override the parent click
+* One issue here is, when we remove elements, Vue actually moves the content of next element
+    into the deleted one making it appear like it has removed, however if there are any values in the input
+    elements in following elements, they will become zero. For this purpose we need make each element as unique
+    using the vue key, we could use DB primary key here
+
+  <li v-for="(goal,idx) in goals" :key="goal" @click="removeGoal(idx)">
+    <p>{{ goal }}</p>
+    <input type="text" @click.stop/>
+  </li>
 
