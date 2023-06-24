@@ -2,9 +2,8 @@
 # Section#2: Basics & Core Concepts - DOM Interface with Vue
 
 `filename: index.html`
-
+``` html
 <pre class="language-html">
-```
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,13 +38,13 @@
 </body>
 
 </html>
-```
 </pre>
+```
 
 `filename: app.js`
 
+``` js
 <pre class="language-js">
-```
 const app = Vue.createApp({
   data() {
     return {
@@ -78,5 +77,5 @@ const app = Vue.createApp({
 });
 
 app.mount('#events');
-```
 </pre>
+```
