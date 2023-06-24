@@ -9,7 +9,7 @@
         <title>Online Tutorial Notes</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/3.0.5/marked.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/styles/default.min.css">
     </head>
     <body>
         <div class="container">
@@ -30,7 +30,14 @@
             // Function to render Markdown content
             function renderMarkdown(markdown) {
                 var markdownContent = marked.parse(markdown);
-                document.getElementById('card-deck').innerHTML = markdownContent;
+                var cardDeck = document.getElementById('card-deck');
+                cardDeck.innerHTML = markdownContent;
+
+                // Apply syntax highlighting to code blocks
+                var codeBlocks = cardDeck.querySelectorAll('pre code');
+                codeBlocks.forEach(function(codeBlock) {
+                    hljs.highlightElement(codeBlock);
+                });
             }
 
             // Function to handle card click event
@@ -65,8 +72,7 @@
             // Call the createCards function to generate the cards
             createCards();
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/components/prism-javascript.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.2.0/highlight.min.js"></script>
         <script>
             Prism.highlightAll();
         </script>
