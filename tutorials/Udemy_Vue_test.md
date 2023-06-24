@@ -2,7 +2,7 @@
 # Section#2: Basics & Core Concepts - DOM Interface with Vue
 
 `filename: index.html`
-``` html
+```html
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +40,7 @@
 ```
 
 `filename: app.js`
-``` js
+```js
 const app = Vue.createApp({
   data() {
     return {
