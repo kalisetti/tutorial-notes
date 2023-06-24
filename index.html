@@ -39,7 +39,7 @@
                 contentDiv.innerHTML = markdownContent;
 
                 // Apply syntax highlighting to code blocks
-                var codeBlocks = cardDeck.querySelectorAll('pre code');
+                var codeBlocks = contentDiv.querySelectorAll('pre code');
                 codeBlocks.forEach(function(codeBlock) {
                     hljs.highlightElement(codeBlock);
                 });
