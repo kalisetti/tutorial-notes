@@ -171,37 +171,43 @@ app.mount('#events');
 ##### Section#3: 41. Rendering Content Conditionally
 ---
 
-+ <p v-if="goals.length == 0">No goals have been added yet - please start adding some!</p>
+```html
+  <p v-if="goals.length == 0">No goals have been added yet - please start adding some!</p>
+```
 
 
 ##### Section#3: 42. v-if, v-else and v-else-if
 ---
 
-* v-else needs be the next immediate element after v-if
++ `v-else` needs be the next immediate element after `v-if`
 
-      <p v-if="goals.length == 0">No goals have been added yet - please start adding some!</p>
-      <ul v-else>
-        <li>Goal</li>
-      </ul>
-
+```html
+  <p v-if="goals.length == 0">No goals have been added yet - please start adding some!</p>
+  <ul v-else>
+    <li>Goal</li>
+  </ul>
+```
 ##### Section#3: 43. Using v-show instead of v-if
 ---
 
-* v-if removes or inserts elements into DOM. Adding and removing elements from DOM causes performance.
-* v-show keeps the elements but makes their css property "display: none" while keeping the element in DOM,
-    however, v-show will not have v-else or v-else-if. It works like a standalone condition.
++ `v-if` removes or inserts elements into DOM. Adding and removing elements from DOM causes performance.
 
-    <p v-show="goals.length == 0">No goals have been added yet - please start adding some!</p>
-    <ul v-show="goals.length > 0">
-      <li>Goal</li>
-    </ul>
++ `v-show` keeps the elements but makes their css property `"display: none"` while keeping the element in DOM,
+    however, `v-show` will not have `v-else` or `v-else-if`. It works like a standalone condition.
 
+```html
+  <p v-show="goals.length == 0">No goals have been added yet - please start adding some!</p>
+  <ul v-show="goals.length > 0">
+    <li>Goal</li>
+  </ul>
+```
 
 ##### Section#3: 44. Rendering Lists of Data
 ---
 
-<li v-for="goal in goals">{{ goal }}</li>
-
+```html
+  <li v-for="goal in goals">{{ goal }}</li>
+```
 
 ##### Section#3: 45. Diving Deeper Into v-for
 ---
@@ -239,6 +245,7 @@ app.mount('#events');
 ---
 
 + `@click.stop` can be used to override the parent click
+  
 + One issue here is, when we remove elements, Vue actually moves the content of next element
     into the deleted one making it appear like it has removed, however if there are any values in the input
     elements in following elements, they will become zero. For this purpose we need make each element as unique
@@ -404,7 +411,8 @@ app.mount('#app2')
 
 + Vue instance lifecycle, we can use these hooks and do cleanup if required and many more
 
-  * createApp({...})
+```
+  + createApp({...})
     - beforeCreate()
       called before the app is fully initialized
     - created()
@@ -416,7 +424,7 @@ app.mount('#app2')
                             |
                             --> Instance Unmounted --> beforeUnmount() --> unmounted()
       now we see something on the screen
-
+```
 
 ##### Section#5: 67. Vue App Lifecycle - Practice
 ---
